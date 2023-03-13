@@ -1,4 +1,4 @@
-N, K = map(int,input().split())
+N, K = map(int, input().split())
 dp = [[0] * 201 for i in range(201)]
 
 for i in range(201):
