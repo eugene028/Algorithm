@@ -1,4 +1,6 @@
-n, m = map(int, input().split())
+import sys
+sys.setrecursionlimit(10**6)
+n, m = map(int, sys.stdin.readline().split())
 par = [0] * 10000001
 height = [1] * 1000001
 
@@ -9,21 +11,20 @@ def findUnion(num):
         return num
     par[num] = findUnion(par[num])
     return par[num]
+
 def unite(a, b):
     a = findUnion(a)
     b = findUnion(b)
-    c = 0
+    if a == b:
+        return
     if height[a] < height[b]:
-        c = a
-        a = b
-        b = c
-
+        a, b = b, a
     par[b] = a
     if height[a] == height[b]:
         height[a] = height[a] + 1
 
 for _ in range(m):
-    k, a, b = map(int, input().split())
+    k, a, b = map(int, sys.stdin.readline().split())
     if k == 0:
         unite(a, b)
     else:
