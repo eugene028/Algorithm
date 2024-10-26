@@ -19,7 +19,6 @@ def solution(board):
         for i in range(4):
             nx = x + dir[i][0]
             ny = y + dir[i][1]
-
             if 0 <= nx < n and 0 <= ny < n and board[nx][ny] == 0:
                 cost = 100
                 if prev_dir != -1 and prev_dir != i:
