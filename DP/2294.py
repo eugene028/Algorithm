@@ -1,20 +1,38 @@
-n, k = map(int, input().split())
-#최대 동전 종류 개수 100개까지 들어갈 수 있음
-coin = [0 for i in range(101)]
-dp = [10001 for i in range(k + 1)]
-#dp값 MAX로 초기화, 단, MAX값에서 하나 더한 값으로 초기화
-dp[0] = 0 #첫번째 dp는 0으로 정의
+import math
+from collections import deque
+N, K = map(int, input().split(" "))
+value = set()
 
-# 나머지 입력값 차례로 받음
-for i in range(n):
-    coin[i] = int(input())
+dp = [math.inf for _ in range(K + 1)]
+for _ in range(N):
+    value.add(int(input()))
 
-for i in range(n): #동전이 3개면 3개까지만 검사해야죠.
-    coinD = coin[i] # 현재 어떤 동전의 가치를 확인하고 있는지 j에다가 시시각각 저장합니다.
-    for j in range(coinD, k + 1): #coin원부터 검사시작합니다. 이미 앞에 있던 친구들은 검사 끝났다..
-        dp[j] = min(dp[j], dp[j - coin[i]] + 1)
+# 더하는 거밖에 없으니까 K까지 검사하면 됨.
+# 1 + 1
+# 5 + 5
+#
+# BFS를 위한 큐
+queue = deque()
 
-if dp[k] == 10001:
+# 각 코인 값에 대해 dp를 초기화
+for coin in value:
+    if coin <= K:
+        dp[coin] = 1
+        queue.append(coin)
+# print(dp)
+
+while queue:
+    v = queue.popleft()
+    for num in value:
+        nxt = v + num
+        if nxt > K:
+            continue
+        if dp[nxt] > dp[v] + 1:
+            dp[nxt] = dp[v] + 1
+            queue.append(nxt)
+
+
+if dp[K] == math.inf:
     print(-1)
 else:
-    print(dp[k])
+    print(dp[K])
