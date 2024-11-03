@@ -1,24 +1,18 @@
-#나무의개수 N, 상근이가 필요한 나무길이 M
-N, M = map(int, input().split())
-trees = list(map(int, input().split()))
-high = max(trees)
-low = 1
+N, M = map(int, input().split(" "))
+trees = list(map(int, input().split(" ")))
 
-while low <= high:
-    treeSlice = []
-    mid = (high + low)//2
-    treeSliceSum = 0
-    for i in trees:
-        if i >= mid:
-            treeSliceSum = treeSliceSum + i - mid
-    if treeSliceSum >= M:
-        low = mid + 1
-    elif treeSliceSum < M:
-        high = mid - 1
-    #elif treeSliceSum == M:
-    #    ans = mid
-    #    break
-print(high)
+start = 0 #절단기
+end = max(trees)
 
-
-
+while start <= end:
+    answer = 0
+    mid = (start + end) // 2
+    for tree in trees:
+        res = tree - mid
+        if res > 0:
+            answer += res
+    if answer >= M:
+        start = mid + 1
+    else:
+        end = mid - 1
+print(end)
